@@ -1,5 +1,4 @@
 //Leitor de código de barras da Loggi
-//Matheus da Silva Soares
 //Versão 1.0
 
 //Lista de pacotes
@@ -166,38 +165,39 @@ function findTypeAndDestiny(packageName) {
 }
 
 //Gerando relatório para a Loggi:
+console.log('\nNome: Matheus da Silva Soares \nUniversidade: UCB - Universidade Católica de Brasília \nCurso: Análise e Desenvolvimento de Sistemas \nSemestre: 1/4 (primeiro) \nFormação: 12/2023')
 //Questão 1
 console.log(
-  '1. Identificar a região de destino de cada pacote, com totalização de pacotes (soma região):'
+  '\n1. Identificar a região de destino de cada pacote, com totalização de pacotes (soma região):'
 )
 console.log(
   '\nPacotes com destino no Sudeste: ' +
     places['Sudeste']['destinationOfPackages'] +
-    '; Total de pacotes: ' +
+    ' | Total de pacotes: ' +
     places['Sudeste']['destinationOfPackages'].length
 )
 console.log(
   '\nPacotes com destino no Sul: ' +
     places['Sul']['destinationOfPackages'] +
-    '; Total de pacotes: ' +
+    ' | Total de pacotes: ' +
     places['Sul']['destinationOfPackages'].length
 )
 console.log(
   '\nPacotes com destino no Centro-oeste: ' +
     places['Centro-oeste']['destinationOfPackages'] +
-    '; Total de pacotes: ' +
+    ' | Total de pacotes: ' +
     places['Centro-oeste']['destinationOfPackages'].length
 )
 console.log(
   '\nPacotes com destino no Nordeste: ' +
     places['Nordeste']['destinationOfPackages'] +
-    '; Total de pacotes: ' +
+    ' | Total de pacotes: ' +
     places['Nordeste']['destinationOfPackages'].length
 )
 console.log(
   '\nPacotes com destino no Norte: ' +
     places['Norte']['destinationOfPackages'] +
-    '; Total de pacotes: ' +
+    ' | Total de pacotes: ' +
     places['Norte']['destinationOfPackages'].length
 )
 
@@ -275,8 +275,12 @@ console.log(
   '\n9. No item acima considerar que as jóias fossem sempre as primeiras a serem descarregadas;'
 )
 
+let northPackages = []
+
 //Questão 10
 console.log('\n10. Listar os pacotes inválidos:')
 for (let package in invalidCodes) {
   console.log(Object.keys(invalidCodes[package])[0])
 }
+
+console.log('\nFim do relatório. :)')
