@@ -27,20 +27,20 @@ const packagesList = {
 
 //Locais
 const places = {
-  Sudeste: { originOfPackages: [], destinationOfPackages: [] },
-  Sul: { originOfPackages: [], destinationOfPackages: [] },
+  'Sudeste': { originOfPackages: [], destinationOfPackages: [] },
+  'Sul': { originOfPackages: [], destinationOfPackages: [] },
   'Centro-oeste': { originOfPackages: [], destinationOfPackages: [] },
-  Nordeste: { originOfPackages: [], destinationOfPackages: [] },
-  Norte: { originOfPackages: [], destinationOfPackages: [] },
+  'Nordeste': { originOfPackages: [], destinationOfPackages: [] },
+  'Norte': { originOfPackages: [], destinationOfPackages: [] },
 }
 
 //Código dos produtos
 const productCode = {
   '001': 'Jóias',
-  111: 'Livros',
-  333: 'Eletrônicos',
-  555: 'Bebidas',
-  888: 'Brinquedos',
+  '111': 'Livros',
+  '333': 'Eletrônicos',
+  '555': 'Bebidas',
+  '888': 'Brinquedos',
 }
 
 //Código de vendedores ativos/inativos
@@ -65,18 +65,59 @@ function split(packageCode) {
   }
 }
 
-//Algoritmo de validação
+//Função que retorna a origem dos pacotes
+function findOriginName(originCode) {
+  if (Number(originCode) >= 1 && Number(originCode) <= 99) {
+    return 'Sudeste'
+  } else if (Number(originCode) >= 100 && Number(originCode) <= 199) {
+    return 'Sul'
+  } else if (Number(originCode) >= 201 && Number(originCode) <= 299) {
+    return 'Centro-oeste'
+  } else if (Number(originCode) >= 300 && Number(originCode) <= 399) {
+    return 'Nordeste'
+  } else if (Number(originCode) >= 400 && Number(originCode) <= 499) {
+    return 'Norte'
+  }
+}
+
+//Função que retorna o destino dos pacotes
+function findDestinyName(destinyCode) {
+  if (Number(destinyCode) >= 1 && Number(destinyCode) <= 99) {
+    return 'Sudeste'
+  } else if (Number(destinyCode) >= 100 && Number(destinyCode) <= 199) {
+    return 'Sul'
+  } else if (Number(destinyCode) >= 201 && Number(destinyCode) <= 299) {
+    return 'Centro-oeste'
+  } else if (Number(destinyCode) >= 300 && Number(destinyCode) <= 399) {
+    return 'Nordeste'
+  } else if (Number(destinyCode) >= 400 && Number(destinyCode) <= 499) {
+    return 'Norte'
+  }
+}
+
+//Função que retorna o tipo de produto
+function findProductType(code) {
+  return productCode[code]
+}
+
+//Algoritmo de validação dos códigos
 for (let key in packagesList) {
   if (packagesList.hasOwnProperty(key)) {
     const element = packagesList[key]
     const productData = split(element)
 
-    if (inactiveSellers.indexOf(productData.sellerCode) > -1) {
+    //Invalidando códigos
+    if (
+      inactiveSellers.indexOf(productData.sellerCode) > -1 ||
+      findProductType(productData.productCode) == undefined ||
+      (findOriginName(productData.origin) == 'Centro-oeste' &&
+      findProductType(productData.productCode) == 'Jóias')
+    ) {
       let invalidProduct = { [key]: productData }
       invalidCodes.push(invalidProduct)
     } else {
-      let validProduct = { [key]: productData }
-      validCodes.push(validProduct)
+      let validProducts = { [key]: productData }
+      validCodes.push(validProducts)
     }
   }
 }
@@ -88,28 +129,28 @@ for (let i = 0; i < validCodes.length; i++) {
   const packageDestinationCode = Number(validCodes[i][packageName].destination)
 
   //Classificando por origem dos produtos
-  if (packageOriginCode >= 1 && packageOriginCode <= 99) {
+  if (findOriginName(packageOriginCode) === 'Sudeste') {
     places['Sudeste']['originOfPackages'].push(packageName)
-  } else if (packageOriginCode >= 100 && packageOriginCode <= 199) {
+  } else if (findOriginName(packageOriginCode) === 'Sul') {
     places['Sul']['originOfPackages'].push(packageName)
-  } else if (packageOriginCode >= 201 && packageOriginCode <= 299) {
+  } else if (findOriginName(packageOriginCode) === 'Centro-oeste') {
     places['Centro-oeste']['originOfPackages'].push(packageName)
-  } else if (packageOriginCode >= 300 && packageOriginCode <= 399) {
+  } else if (findOriginName(packageOriginCode) === 'Nordeste') {
     places['Nordeste']['originOfPackages'].push(packageName)
-  } else if (packageOriginCode >= 400 && packageOriginCode <= 499) {
+  } else if (findOriginName(packageOriginCode) === 'Norte') {
     places['Norte']['originOfPackages'].push(packageName)
   }
 
   //Classificando por destino dos produtos
-  if (packageDestinationCode >= 1 && packageDestinationCode <= 99) {
+  if (findDestinyName(packageDestinationCode) === 'Sudeste') {
     places['Sudeste']['destinationOfPackages'].push(packageName)
-  } else if (packageDestinationCode >= 100 && packageDestinationCode <= 199) {
+  } else if (findDestinyName(packageDestinationCode) === 'Sul') {
     places['Sul']['destinationOfPackages'].push(packageName)
-  } else if (packageDestinationCode >= 201 && packageDestinationCode <= 299) {
+  } else if (findDestinyName(packageDestinationCode) === 'Centro-oeste') {
     places['Centro-oeste']['destinationOfPackages'].push(packageName)
-  } else if (packageDestinationCode >= 300 && packageDestinationCode <= 399) {
+  } else if (findDestinyName(packageDestinationCode) === 'Nordeste') {
     places['Nordeste']['destinationOfPackages'].push(packageName)
-  } else if (packageDestinationCode >= 400 && packageDestinationCode <= 499) {
+  } else if (findDestinyName(packageDestinationCode) === 'Norte') {
     places['Norte']['destinationOfPackages'].push(packageName)
   }
 
@@ -132,26 +173,6 @@ activeSellers.forEach((x) => {
   packagesByEachSeller[x] = (packagesByEachSeller[x] || 0) + 1
 })
 
-//Função que retorna o destino em nome
-function findDestinyName(destinyCode) {
-  if (Number(destinyCode) >= 1 && Number(destinyCode) <= 99) {
-    return 'Sudeste'
-  } else if (Number(destinyCode) >= 100 && Number(destinyCode) <= 199) {
-    return 'Sul'
-  } else if (Number(destinyCode) >= 201 && Number(destinyCode) <= 299) {
-    return 'Centro-oeste'
-  } else if (Number(destinyCode) >= 300 && Number(destinyCode) <= 399) {
-    return 'Nordeste'
-  } else if (Number(destinyCode) >= 400 && Number(destinyCode) <= 499) {
-    return 'Norte'
-  }
-}
-
-//Função que retorna o tipo de produto
-function findProductType(code) {
-  return productCode[code]
-}
-
 //Função que retorna o tipo de produto nos pacotes
 function findTypeAndDestiny(packageName) {
   for (let i = 0; i < validCodes.length; i++) {
@@ -165,7 +186,9 @@ function findTypeAndDestiny(packageName) {
 }
 
 //Gerando relatório para a Loggi:
-console.log('\nNome: Matheus da Silva Soares \nUniversidade: UCB - Universidade Católica de Brasília \nCurso: Análise e Desenvolvimento de Sistemas \nSemestre: 1/4 (primeiro) \nFormação: 12/2023')
+console.log(
+  '\nNome: Matheus da Silva Soares \nUniversidade: UCB - Universidade Católica de Brasília \nCurso: Análise e Desenvolvimento de Sistemas \nSemestre: 1/4 (primeiro) \nFormação: 12/2023'
+)
 //Questão 1
 console.log(
   '\n1. Identificar a região de destino de cada pacote, com totalização de pacotes (soma região):'
@@ -221,7 +244,7 @@ console.log(
 console.log(
   southPackagesWithToys.length > 0
     ? southPackagesWithToys
-    : 'Nenhum pacote encontrado.'
+    : 'Nenhum pacote da região Sul com brinquedo encontrado.'
 )
 
 //Questão 4
@@ -271,8 +294,8 @@ validCodes.map((x) => {
 //Questão 7, 8 e 9
 console.log(
   '\n7. Se o transporte dos pacotes para o Norte passa pela Região Centro-Oeste, quais são os pacotes que devem ser despachados no mesmo caminhão?' +
-  '\n8. Se todos os pacotes fossem uma fila qual seria a ordem de carga para o Norte no caminhão para descarregar os pacotes da Região Centro Oeste primeiro;' +
-  '\n9. No item acima considerar que as jóias fossem sempre as primeiras a serem descarregadas;'
+    '\n8. Se todos os pacotes fossem uma fila qual seria a ordem de carga para o Norte no caminhão para descarregar os pacotes da Região Centro Oeste primeiro;' +
+    '\n9. No item acima considerar que as jóias fossem sempre as primeiras a serem descarregadas;'
 )
 
 let northPackages = []
