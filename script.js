@@ -52,6 +52,9 @@ const inactiveSellers = ["367"]
 const validCodes = []
 const invalidCodes = []
 
+//Pacotes de origem na região sul com brinquedos
+const southPackagesWithToys = []
+
 //função identificadora
 function split(packageCode) {
     return {
@@ -79,14 +82,7 @@ for (let key in packagesList) {
     }
 }
 
-/*
-Centro-oeste 201 até 299
-Nordeste 300 até 399
-Norte 400 até 499
-Sudeste 001 até 099
-Sul 100 até 199
-*/
-
+//Algoritmo de classificação
 for (let i = 0; i < validCodes.length; i++) {
     const packageName = Object.keys(validCodes[i])[0];    
     const packageOriginCode = Number(validCodes[i][packageName].origin);
@@ -117,13 +113,52 @@ for (let i = 0; i < validCodes.length; i++) {
     } else if (packageDestinationCode >= 400 && packageDestinationCode <= 499) {
         places["Norte"]["destinationOfPackages"].push(packageName);
     }
+
+    //Identificando pacotes da região sul com brinquedos
+    if (packageOriginCode >= 100 && packageOriginCode <= 199 && productCode["Brinquedos"] == validCodes[i][packageName].productCode) {
+        southPackagesWithToys.push(packageName);
+    }
+
+    //Identificando vendedores
+    activeSellers.push(validCodes[i][packageName].sellerCode);
 }
 
+//Número de pacotes enviados por cada vendedor
+const packagesByEachSeller = {};
+activeSellers.forEach(x => { packagesByEachSeller[x] = (packagesByEachSeller[x] || 0) + 1; })
+//console.log(packagesByEachSeller)
+
+//Gerando relatório em arquivo txt:
+console.log("1 - Identificar a região de destino de cada pacote, com totalização de pacotes (soma região);")
+console.log("Pacotes com destino no Sudeste: " + places["Sudeste"]["destinationOfPackages"]);
+console.log("Pacotes com destino no Sul: " + places["Sul"]["destinationOfPackages"]);
+console.log("Pacotes com destino no Centro-oeste: " + places["Centro-oeste"]["destinationOfPackages"]);
+console.log("Pacotes com destino no Nordeste: " + places["Nordeste"]["destinationOfPackages"]);
+console.log("Pacotes com destino no Norte: " + places["Norte"]["destinationOfPackages"]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //console.log(typeof Number(validCodes[1]["Pacote 2"]["origin"]));
-console.log(places);
+//console.log(places["Sul"]["originOfPackages"]);
+//console.log(southPackagesWithToys);
+//console.log(activeSellers);
 
-
-
+//6 - pesquisar nos validCodes com packageName dos destinos
 
 
 
