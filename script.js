@@ -156,8 +156,7 @@ for (let i = 0; i < validCodes.length; i++) {
 
   //Identificando pacotes da região sul com brinquedos
   if (
-    packageOriginCode >= 100 &&
-    packageOriginCode <= 199 &&
+    findOriginName(packageOriginCode) === 'Sul' &&
     validCodes[i][packageName].productCode == '888'
   ) {
     southPackagesWithToys.push(packageName)
