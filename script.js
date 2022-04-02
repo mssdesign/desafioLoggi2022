@@ -184,7 +184,7 @@ function findTypeAndDestiny(packageName) {
   }
 }
 
-//Gerando relatório para a Loggi:
+//Gerando relatório automático para a Loggi:
 console.log(
   '\nNome: Matheus da Silva Soares \nUniversidade: UCB - Universidade Católica de Brasília \nCurso: Análise e Desenvolvimento de Sistemas \nSemestre: 1/4 (primeiro) \nFormação: 12/2023'
 )
@@ -290,7 +290,7 @@ validCodes.map((x) => {
   )
 })
 
-//Questão 7, 8 e 9
+//Questões 7, 8 e 9
 console.log(
   '\n7. Se o transporte dos pacotes para o Norte passa pela Região Centro-Oeste, quais são os pacotes que devem ser despachados no mesmo caminhão?' +
     '\n8. Se todos os pacotes fossem uma fila qual seria a ordem de carga para o Norte no caminhão para descarregar os pacotes da Região Centro Oeste primeiro;' +
@@ -305,4 +305,4 @@ for (let package in invalidCodes) {
   console.log(Object.keys(invalidCodes[package])[0])
 }
 
-console.log('\nFim do relatório. :)')
+console.log('\nFim do relatório automático. :)')
