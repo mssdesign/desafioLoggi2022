@@ -3,7 +3,7 @@
 //Versão 1.0
 
 //Lista de pacotes
-const packagesList = [{
+const packagesList = {
     "Pacote 1": "288355555123888",
     "Pacote 2": "335333555584333",
     "Pacote 3": "223343555124001",
@@ -24,25 +24,25 @@ const packagesList = [{
     "Pacote 18": "022388555123555",
     "Pacote 19": "432044555845333",
     "Pacote 20": "034311555874001"
-}]
+}
 
 //Locais
-const places = [{
-    "Sudeste": [{"min": 001, "max": 099}, {"originProducts": [], "destinationProducts": []}],
-    "Sul": [{"min": 100, "max": 199}, {"originProducts": [], "destinationProducts": []}],
-    "Centro-oeste": [{"min": 201, "max": 299}, {"originProducts": [], "destinationProducts": []}],
-    "Nordeste": [{"min": 300, "max": 399}, {"originProducts": [], "destinationProducts": []}],
-    "Norte": [{"min": 400, "max": 499}, {"originProducts": [], "destinationProducts": []}]
-}]
+const places = {
+    "Sudeste": {"originOfPackages": [], "destinationOfPackages": []},
+    "Sul": {"originOfPackages": [], "destinationOfPackages": []},
+    "Centro-oeste": {"originOfPackages": [], "destinationOfPackages": []},
+    "Nordeste": {"originOfPackages": [], "destinationOfPackages": []},
+    "Norte": {"originOfPackages": [], "destinationOfPackages": []}
+}
 
 //Código dos produtos
-const productsCode = [{
+const productCode = {
     "Jóias": "001",
     "Livros": "111",
     "Eletrônicos": "333",
     "Bebidas": "555",
     "Brinquedos": "888"
-}]
+}
 
 //Código de vendedores ativos/inativos
 const activeSellers = []
@@ -64,29 +64,63 @@ function split(packageCode) {
 }
 
 //Algoritmo de validação
-for (let i = 0; i < packagesList.length; i++) {
-    for (let key in packagesList[i]) {
-        if (packagesList[i].hasOwnProperty(key)) {
-            const element = packagesList[i][key];
-            const productData = split(element);
+for (let key in packagesList) {
+    if (packagesList.hasOwnProperty(key)) {
+        const element = packagesList[key];
+        const productData = split(element);
 
-            if (inactiveSellers.indexOf(productData.sellerCode) > -1) {
-                let invalidProduct = {[key]: productData}
-                invalidCodes.push(invalidProduct);
-            } else {
-                let validProduct = {[key]: productData}
-                validCodes.push(validProduct);
-            }
+        if (inactiveSellers.indexOf(productData.sellerCode) > -1) {
+            let invalidProduct = {[key]: productData}
+            invalidCodes.push(invalidProduct);
+        } else {
+            let validProduct = {[key]: productData}
+            validCodes.push(validProduct);
         }
     }
 }
 
+/*
+Centro-oeste 201 até 299
+Nordeste 300 até 399
+Norte 400 até 499
+Sudeste 001 até 099
+Sul 100 até 199
+*/
+
 for (let i = 0; i < validCodes.length; i++) {
-    const productName = Object.keys(validCodes[i])[0];
-    console.log(product)
+    const packageName = Object.keys(validCodes[i])[0];    
+    const packageOriginCode = Number(validCodes[i][packageName].origin);
+    const packageDestinationCode = Number(validCodes[i][packageName].destination);
+
+    //Classificando por origem dos produtos
+    if (packageOriginCode >= 1 && packageOriginCode <= 99) {
+        places["Sudeste"]["originOfPackages"].push(packageName);        
+    } else if (packageOriginCode >= 100 && packageOriginCode <= 199) {
+        places["Sul"]["originOfPackages"].push(packageName);
+    } else if (packageOriginCode >= 201 && packageOriginCode <= 299) {
+        places["Centro-oeste"]["originOfPackages"].push(packageName);
+    } else if (packageOriginCode >= 300 && packageOriginCode <= 399) {
+        places["Nordeste"]["originOfPackages"].push(packageName);
+    } else if (packageOriginCode >= 400 && packageOriginCode <= 499) {
+        places["Norte"]["originOfPackages"].push(packageName);
+    }
+
+    //Classificando por destino dos produtos
+    if (packageDestinationCode >= 1 && packageDestinationCode <= 99) {
+        places["Sudeste"]["destinationOfPackages"].push(packageName);
+    } else if (packageDestinationCode >= 100 && packageDestinationCode <= 199) {    
+        places["Sul"]["destinationOfPackages"].push(packageName);
+    } else if (packageDestinationCode >= 201 && packageDestinationCode <= 299) {
+        places["Centro-oeste"]["destinationOfPackages"].push(packageName);
+    } else if (packageDestinationCode >= 300 && packageDestinationCode <= 399) {
+        places["Nordeste"]["destinationOfPackages"].push(packageName);
+    } else if (packageDestinationCode >= 400 && packageDestinationCode <= 499) {
+        places["Norte"]["destinationOfPackages"].push(packageName);
+    }
 }
 
-
+//console.log(typeof Number(validCodes[1]["Pacote 2"]["origin"]));
+console.log(places);
 
 
 
