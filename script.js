@@ -55,7 +55,8 @@ const invalidCodes = []
 const southPackagesWithToys = []
 
 //Pacotes do Norte e do Centro-oeste em ordem 
-const northAndCenterPackagesInOrder = []
+const northPackagesInOrder = []
+const centerPackagesInOrder = []
 
 //função identificadora
 function split(packageCode) {
@@ -169,18 +170,15 @@ for (let i = 0; i < validCodes.length; i++) {
   //Identificando vendedores
   activeSellers.push(validCodes[i][packageName].sellerCode)
 
+  //Colocando pacotes do Norte e do Centro-oeste em ordem
     if (findDestinyName(packageDestinationCode) == 'Norte' && findProductType(packageProductCode) != 'Jóias') {
-        console.log('Norte Sem joias: ' + packageName)
-        northAndCenterPackagesInOrder.push(packageName)
+        northPackagesInOrder.unshift(packageName)
     } else if (findDestinyName(packageDestinationCode) == 'Norte' && findProductType(packageProductCode) == 'Jóias') {
-        console.log('Norte Com joias: ' + packageName)
-        northAndCenterPackagesInOrder.push(packageName)
-    } else if (findDestinyName(packageDestinationCode) == 'Centro-Oeste' && findProductType(packageProductCode) != 'Jóias') {
-        console.log('Centro-Oeste Sem joias: ' + packageName)
-        northAndCenterPackagesInOrder.push(packageName)
-    } else if (findDestinyName(packageDestinationCode) == 'Centro-Oeste' && findProductType(packageProductCode) == 'Jóias') {
-        console.log('Centro-Oeste Com joias: ' + packageName)
-        northAndCenterPackagesInOrder.push(packageName)
+        northPackagesInOrder.push(packageName)
+    } else if (findDestinyName(packageDestinationCode) == 'Centro-oeste' && findProductType(packageProductCode) != 'Jóias') {
+        centerPackagesInOrder.unshift(packageName)
+    } else if (findDestinyName(packageDestinationCode) == 'Centro-oeste' && findProductType(packageProductCode) == 'Jóias') {
+        centerPackagesInOrder.push(packageName)
     }
 }
 
@@ -316,7 +314,9 @@ console.log(
 )
 
 console.log('\nPacotes do Norte e do Centro-Oeste em estrutura de pilha (primeiros pacotes serão os últimos a desembarcar no local destinado): ')
-//console.log(northAndCenterPackagesInOrder)
+const northAndCenterPackagesInOrder = []
+northAndCenterPackagesInOrder.push(...northPackagesInOrder)
+northAndCenterPackagesInOrder.push(...centerPackagesInOrder)
 for (let package in northAndCenterPackagesInOrder) {
     console.log(`${northAndCenterPackagesInOrder[package]}`)
 }
