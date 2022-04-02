@@ -54,6 +54,9 @@ const invalidCodes = []
 //Pacotes de origem na região sul com brinquedos
 const southPackagesWithToys = []
 
+//Pacotes do Norte e do Centro-oeste em ordem 
+const northAndCenterPackagesInOrder = []
+
 //função identificadora
 function split(packageCode) {
   return {
@@ -127,6 +130,7 @@ for (let i = 0; i < validCodes.length; i++) {
   const packageName = Object.keys(validCodes[i])[0]
   const packageOriginCode = Number(validCodes[i][packageName].origin)
   const packageDestinationCode = Number(validCodes[i][packageName].destination)
+  const packageProductCode = validCodes[i][packageName].productCode
 
   //Classificando por origem dos produtos
   if (findOriginName(packageOriginCode) === 'Sudeste') {
@@ -164,6 +168,20 @@ for (let i = 0; i < validCodes.length; i++) {
 
   //Identificando vendedores
   activeSellers.push(validCodes[i][packageName].sellerCode)
+
+    if (findDestinyName(packageDestinationCode) == 'Norte' && findProductType(packageProductCode) != 'Jóias') {
+        console.log('Norte Sem joias: ' + packageName)
+        northAndCenterPackagesInOrder.push(packageName)
+    } else if (findDestinyName(packageDestinationCode) == 'Norte' && findProductType(packageProductCode) == 'Jóias') {
+        console.log('Norte Com joias: ' + packageName)
+        northAndCenterPackagesInOrder.push(packageName)
+    } else if (findDestinyName(packageDestinationCode) == 'Centro-Oeste' && findProductType(packageProductCode) != 'Jóias') {
+        console.log('Centro-Oeste Sem joias: ' + packageName)
+        northAndCenterPackagesInOrder.push(packageName)
+    } else if (findDestinyName(packageDestinationCode) == 'Centro-Oeste' && findProductType(packageProductCode) == 'Jóias') {
+        console.log('Centro-Oeste Com joias: ' + packageName)
+        northAndCenterPackagesInOrder.push(packageName)
+    }
 }
 
 //Número de pacotes enviados por cada vendedor
@@ -292,15 +310,20 @@ validCodes.map((x) => {
 
 //Questões 7, 8 e 9
 console.log(
-  '\n7. Se o transporte dos pacotes para o Norte passa pela Região Centro-Oeste, quais são os pacotes que devem ser despachados no mesmo caminhão?' +
-    '\n8. Se todos os pacotes fossem uma fila qual seria a ordem de carga para o Norte no caminhão para descarregar os pacotes da Região Centro Oeste primeiro;' +
-    '\n9. No item acima considerar que as jóias fossem sempre as primeiras a serem descarregadas;'
+  '\nQuestões 7, 8 e 9) 7. Se o transporte dos pacotes para o Norte passa pela Região Centro-Oeste, quais são os pacotes que devem ser despachados no mesmo caminhão?' +
+  '\n8. Se todos os pacotes fossem uma fila qual seria a ordem de carga para o Norte no caminhão para descarregar os pacotes da Região Centro Oeste primeiro;' +
+  '\n9. No item acima considerar que as jóias fossem sempre as primeiras a serem descarregadas;'
 )
 
-let northPackages = []
+console.log('\nPacotes do Norte e do Centro-Oeste em estrutura de pilha (primeiros pacotes serão os últimos a desembarcar no local destinado): ')
+//console.log(northAndCenterPackagesInOrder)
+for (let package in northAndCenterPackagesInOrder) {
+    console.log(`${northAndCenterPackagesInOrder[package]}`)
+}
+console.log('(Os pacotes mais próximos desta linha devem ser descarregados primeiro!)')
 
 //Questão 10
-console.log('\n10. Listar os pacotes inválidos:')
+console.log('\n\n10. Listar os pacotes inválidos:')
 for (let package in invalidCodes) {
   console.log(Object.keys(invalidCodes[package])[0])
 }
