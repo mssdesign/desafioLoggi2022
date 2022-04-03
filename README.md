@@ -9,5 +9,5 @@
 
 <h2>Como executar a aplicação:</h2>
 <p>
-    ✅ Faça o clone/download deste repositório, abra o terminal na pasta onde o arquivo está localizado e digite: node script.js
+    ✅ Faça o clone/download deste repositório, abra o terminal na pasta onde o arquivo está localizado e digite: <code>node script.js</code>
 </p>
