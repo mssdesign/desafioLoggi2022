@@ -1,5 +1,12 @@
-//Leitor de código de barras da Loggi
-//Versão 1.0
+/*
+Nome: Matheus da Silva Soares
+Universidade: UCB - Universidade Católica de Brasília
+Curso: Análise e Desenvolvimento de Sistemas
+Semestre: 1/4 (primeiro)
+Formação: 12/2023
+Projeto: Leitor de código de barras da Loggi
+Versão: 1.0.0
+*/
 
 //Lista de pacotes
 const packagesList = {
