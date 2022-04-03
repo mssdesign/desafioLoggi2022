@@ -329,3 +329,5 @@ for (let package in invalidCodes) {
 }
 
 console.log('\nFim do relatório automático. :)')
+
+//Para executar o código, basta abrir o terminal na pasta onde o arquivo está localizado e digitar: node script.js
