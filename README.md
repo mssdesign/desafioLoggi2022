@@ -11,6 +11,5 @@
 <p>
     ✅ Faça o clone/download deste repositório, abra o terminal na pasta onde o arquivo está localizado e digite o comando: <code>node script.js</code>
 
-    <br>
     <strong>Após a execução do script o resultado do desafio será gerado no console.</strong>
 </p>
